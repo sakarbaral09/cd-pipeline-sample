@@ -1,0 +1,37 @@
+pipeline:
+  name: testcdpipeline
+  identifier: testcdpipeline
+  projectIdentifier: testNewProj
+  orgIdentifier: default
+  tags: {}
+  properties:
+    ci:
+      codebase:
+        connectorRef: account.Github_OAuth_1708059743550
+        repoName: sakarbaral09/cd-pipeline-sample
+        build: <+input>
+  stages:
+    - stage:
+        name: test-build-sample
+        identifier: testbuildsample
+        description: ""
+        type: CI
+        spec:
+          cloneCodebase: true
+          platform:
+            os: MacOS
+            arch: Amd64
+          runtime:
+            type: Docker
+            spec: {}
+          execution:
+            steps:
+              - step:
+                  type: BuildAndPushDockerRegistry
+                  name: BuildAndPushDockerRegistry_1
+                  identifier: BuildAndPushDockerRegistry_1
+                  spec:
+                    connectorRef: account.harnessImage
+                    repo: sakarbaral09/testrepo
+                    tags:
+                      - latest
